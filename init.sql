@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS users (
     hashed_password TEXT NOT NULL,
     role          user_role DEFAULT 'company_user',
     is_active     BOOLEAN DEFAULT TRUE,
+    avatar_url    TEXT,
     created_at    TIMESTAMP DEFAULT NOW()
 );
 
@@ -69,6 +70,7 @@ CREATE TABLE IF NOT EXISTS sales (
     sale_date       TIMESTAMP DEFAULT NOW(),
     total_amount    NUMERIC(12,2) DEFAULT 0,
     discount        NUMERIC(12,2) DEFAULT 0,
+    payment_method  VARCHAR(30) DEFAULT 'efectivo',
     notes           TEXT,
     status          VARCHAR(30) DEFAULT 'completed',
     created_at      TIMESTAMP DEFAULT NOW()
@@ -110,7 +112,7 @@ VALUES (
     'superadmin',
     'admin@sistema.com',
     'Super Administrador',
-    '$2b$12$kIzjOJbIGgKjI.yaGDcrBe1ltmXXe6.N2wANB/ZPhupR/ntojqzpG',
+    '$2b$12$Gx5C2fsHACb1SLe8pj2jXeVoJ.lAeVQ4oGaAX6/PIghhMSV.AiwXG',
     'superadmin'
 ) ON CONFLICT DO NOTHING;
 
@@ -129,7 +131,7 @@ VALUES (
 INSERT INTO users (company_id, username, email, full_name, hashed_password, role)
 SELECT 
     c.id, 'demo_admin', 'demo@empresa.com', 'Administrador Demo',
-    '$2b$12$hr4RGhdIQQ0jHP/1kvR54.l1cE6hQicW04d2Z10kA5p4e4u0mckey',
+    '$2b$12$GrIm/Me.W6.tWYDzikqdie.kn8u.ZHI0lH68Ve1RxbQXcu3cHkxFu',
     'company_admin'
 FROM companies c WHERE c.ruc = '20123456780'
 ON CONFLICT DO NOTHING;
@@ -138,7 +140,7 @@ ON CONFLICT DO NOTHING;
 INSERT INTO users (company_id, username, email, full_name, hashed_password, role)
 SELECT 
     c.id, 'demo_userpos', 'demopos@empresa.com', 'Usuario POS Demo',
-    '$2b$12$hr4RGhdIQQ0jHP/1kvR54.l1cE6hQicW04d2Z10kA5p4e4u0mckey',
+    '$2b$12$.0qPdF9oYRsJQg8vpj/Dguiht2idu4TDv4xGsdGNwqutvMilzW2W.',
     'company_user'
 FROM companies c WHERE c.ruc = '20123456780'
 ON CONFLICT DO NOTHING;

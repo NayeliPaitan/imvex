@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../../contexts/AuthContext'
+import { useAuth } from '../contexts/AuthContext'
 import { Package2, LogIn, AlertCircle } from 'lucide-react'
 
 export default function Login() {
@@ -113,7 +113,8 @@ export default function Login() {
         }}>
           <div style={{ fontWeight: 600, marginBottom: 6, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontSize: 10 }}>Cuentas demo</div>
           <div>Superadmin: <span className="mono" style={{ color: 'var(--accent)' }}>superadmin / admin123</span></div>
-          <div>Empresa: <span className="mono" style={{ color: 'var(--info)' }}> admin / empresa123</span></div>
+          <div>Empresa: <span className="mono" style={{ color: 'var(--info)' }}> demo_admin / empresa123</span></div>
+          <div>Usuario Pos: <span className="mono" style={{ color: 'var(--info)' }}> demo_userpos / empresapos</span></div>
         </div>
       </div>
     </div>
