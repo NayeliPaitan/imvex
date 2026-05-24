@@ -1,5 +1,5 @@
 -- ============================================================
--- INVENTORY SYSTEM - DATABASE INITIALIZATION
+-- IMVEX / INVENTORY SYSTEM - DATABASE INITIALIZATION
 -- ============================================================
 
 -- Roles

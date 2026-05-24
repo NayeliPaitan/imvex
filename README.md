@@ -40,7 +40,7 @@ Accede a:
 ## Estructura del proyecto
 
 ```
-inventory-system/
+imvex/
 ├── docker-compose.yml          # Orquestación de servicios
 ├── init.sql                    # Esquema BD + datos demo
 │
@@ -162,7 +162,7 @@ cd backend
 python -m venv venv
 source venv/bin/activate        # Windows: venv\Scripts\activate
 pip install -r requirements.txt
-DATABASE_URL=postgresql://admin:admin123@localhost:5432/inventory_system uvicorn main:app --reload
+DATABASE_URL=postgresql://admin:admin123@localhost:5432/imvex uvicorn main:app --reload
 ```
 
 ### Frontend
