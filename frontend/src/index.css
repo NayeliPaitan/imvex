@@ -35,7 +35,62 @@
   --shadow-elevated: 0 4px 16px rgba(0,0,0,0.5);
 }
 
-/* Company panel overrides (applied via .theme-company) */
+/* ─── LIGHT THEME ───────────────────────────── */
+
+[data-theme='light'] {
+  --bg-base: #f5f7fb;
+  --bg-surface: #ffffff;
+  --bg-elevated: #f9fafb;
+  --bg-hover: #eef2f7;
+
+  --border: #dbe2ea;
+  --border-subtle: #edf2f7;
+
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --text-muted: #9ca3af;
+
+  --accent: #00b894;
+  --accent-dim: rgba(0, 184, 148, 0.12);
+  --accent-hover: #00d6aa;
+
+  --danger: #dc2626;
+  --danger-dim: rgba(220, 38, 38, 0.12);
+
+  --warning: #d97706;
+  --warning-dim: rgba(217, 119, 6, 0.12);
+
+  --info: #2563eb;
+  --info-dim: rgba(37, 99, 235, 0.12);
+
+  --success: #16a34a;
+  --success-dim: rgba(22, 163, 74, 0.12);
+
+  --shadow-card:
+    0 1px 3px rgba(0,0,0,0.08);
+
+  --shadow-elevated:
+    0 8px 24px rgba(0,0,0,0.12);
+}
+/* ─── COMPANY BRANDING ONLY ───────────────────────────── */
+.theme-admin {
+  --accent: #00d4aa;
+  --accent-dim: rgba(0, 212, 170, 0.12);
+  --accent-hover: #00f0c0;
+}
+
+.theme-company {
+  --accent: #4d9de0;
+  --accent-dim: rgba(77, 157, 224, 0.12);
+  --accent-hover: #6ab4f5;
+}
+
+.theme-cashier {
+  --accent: #f59e0b;
+  --accent-dim: rgba(245, 158, 11, 0.12);
+  --accent-hover: #ffb82e;
+}
+/* Company panel overrides (applied via .theme-company) 
 .theme-company {
   --bg-base: #0f1419;
   --bg-surface: #1a2232;
@@ -45,7 +100,7 @@
   --accent: #4d9de0;
   --accent-dim: rgba(77, 157, 224, 0.12);
   --accent-hover: #6ab4f5;
-}
+}*/
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 

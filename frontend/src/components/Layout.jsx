@@ -1,34 +1,67 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import {
-  LayoutDashboard, Building2, Package, ShoppingCart,ShoppingBag,
-  Boxes, Tags, LogOut, X, Camera, KeyRound, Save,
-  Link as LinkIcon, Upload
+  LayoutDashboard, Building2, Package, ShoppingCart, ShoppingBag,
+  Boxes, Tags, LogOut, X, Camera, KeyRound, Save, CreditCard,
+  LifeBuoy, Settings,Megaphone, ShieldCheck,
+  Link as LinkIcon, Upload,
+  MonitorPlay, Wallet, Users, Truck, BarChart3, UserCheck,
+  Sun, Moon, Monitor,
 } from 'lucide-react'
 import api from '../api'
 import { useToast } from '../hooks/useToast'
 
 const ROLE_LABELS = {
-  superadmin:    'Super Administrador',
+  superadmin:    'Saas Imvex',
   company_admin: 'Administrador',
   company_user:  'Cajero',
 }
 
 const ADMIN_NAV = [
-  { section: 'Panel Admin' },
-  { to: '/admin',           label: 'Dashboard', icon: LayoutDashboard, end: true },
-  { to: '/admin/companies', label: 'Empresas',  icon: Building2 },
+  { section: 'SaaS Core' },
+  { to: '/admin',               label: 'Dashboard',             icon: LayoutDashboard, end: true },
+  { to: '/admin/companies',     label: 'Empresas / Clientes',   icon: Building2 }, 
+  { to: '/admin/subscriptions', label: 'Planes y Facturación',  icon: CreditCard }, // Planes basic, professional , enterprise
+
+  { section: 'Finanzas e Insights' },
+  { to: '/admin/metrics',       label: 'Métricas de Negocio',   icon: BarChart3 }, // MRR, Churn Rate, LTV, ARPU
+  { to: '/admin/coupons',       label: 'Cupones y Descuentos',  icon: Tags },      // Estrategias de marketing y captación
+
+  { section: 'Atención y Retención' },
+  { to: '/admin/support',       label: 'Soporte Técnico',       icon: LifeBuoy },  // Tickets activos y chat de ayuda
+  { to: '/admin/notifications', label: 'Anuncios Globales',     icon: Megaphone }, // Alertas de mantenimiento o actualizaciones
+
+  { section: 'Seguridad y DevOps' },
+  { to: '/admin/audit-logs',    label: 'Logs de Auditoría',     icon: ShieldCheck }, // Acciones críticas de tus clientes o staff
+  { to: '/admin/configuration', label: 'Variables de Sistema',  icon: Settings },    // Pasarelas de pago, integraciones, respaldos
+
 ]
 
 const COMPANY_NAV = [
   { section: 'Operaciones' },
-  { to: '/company',            label: 'Dashboard',  icon: LayoutDashboard, end: true },
-  { to: '/company/products',   label: 'Productos',  icon: Package },
-  { to: '/company/categories', label: 'Categorías', icon: Tags },
-  { to: '/company/sales',      label: 'Ventas',     icon: ShoppingCart },
-  { to: '/company/purchases',  label: 'Compras',    icon: ShoppingBag },
-  { to: '/company/inventory',  label: 'Inventario', icon: Boxes },
+  { to: '/company',            label: 'Dashboard',   icon: LayoutDashboard, end: true },
+  { to: '/company/pos',        label: 'Punto de Venta', icon: MonitorPlay }, // ¡Indispensable! Acceso rápido a la caja
+
+  { section: 'Catálogo' },
+  { to: '/company/products',   label: 'Productos',   icon: Package },
+  { to: '/company/categories', label: 'Categorías',  icon: Tags },
+  
+  { section: 'Movimientos' },
+  { to: '/company/sales',       label: 'Ventas',      icon: ShoppingCart },
+  { to: '/company/purchases',   label: 'Compras',     icon: ShoppingBag },
+  { to: '/company/inventory',   label: 'Inventario',  icon: Boxes }, // Ajustes, mermas, transferencias
+  { to: '/company/cash-control',label: 'Control de Caja', icon: Wallet }, // Cierres de caja (X/Z), ingresos/egresos
+
+  { section: 'Contactos' },
+  { to: '/company/customers',  label: 'Clientes',    icon: Users }, // Crédito a clientes, historial de compras
+  { to: '/company/suppliers',  label: 'Proveedores', icon: Truck },  // Cuentas por pagar, datos de contacto
+
+  { section: 'Administración' },
+  { to: '/company/analytics',  label: 'Reportes',    icon: BarChart3 }, // Gráficas de utilidad, reportes fiscales
+  { to: '/company/team',       label: 'Empleados',   icon: UserCheck }, // Roles, permisos y cajeros asignados
+  { to: '/company/settings',   label: 'Configuración', icon: Settings }, // Datos fiscales, ticket, sucursales
+
 ]
 
 // ─── Avatar ───────────────────────────────────────────────────────────────────
@@ -233,7 +266,19 @@ export default function Layout({ children, isAdmin = false, theme = '' }) {
   const navigate = useNavigate()
   const [showProfile, setShowProfile] = useState(false)
   const [localUser, setLocalUser] = useState(user)
+  // modo dark 
+  const [themeMode, setThemeMode] = useState(
+    localStorage.getItem('theme') || 'dark'
+  )
+
   const { ToastContainer } = useToast()
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', themeMode)
+    localStorage.setItem('theme', themeMode)
+  }, [themeMode])
+
+
   const navItems = isAdmin ? ADMIN_NAV : COMPANY_NAV
   const currentUser = localUser || user
 
@@ -245,7 +290,8 @@ export default function Layout({ children, isAdmin = false, theme = '' }) {
       <nav className="sidebar">
         <div className="sidebar-logo">
           <span style={{ width:26, height:26, background:'var(--accent-dim)', border:'1px solid var(--accent)', borderRadius:6, display:'inline-flex', alignItems:'center', justifyContent:'center', fontSize:12, fontWeight:700, color:'var(--accent)', flexShrink:0 }}>S</span>
-          {isAdmin ? 'Superadmin' : 'Inventario'}
+          {/* name the layout */}
+          {isAdmin ? 'IMVEX' : 'Inventario'}
         </div>
         <div style={{ flex:1, padding:'8px 0' }}>
           {navItems.map((item, i) => {
@@ -257,6 +303,35 @@ export default function Layout({ children, isAdmin = false, theme = '' }) {
               </NavLink>
             )
           })}
+        </div>
+        {/* Theme Switch */}
+        <div
+          style={{
+            padding: '10px 12px',
+            borderTop: '1px solid var(--border)',
+          }}
+        >
+          <button
+            className="btn btn-ghost"
+            style={{
+              width: '100%',
+              justifyContent: 'flex-start',
+              gap: 8,
+            }}
+            onClick={() =>
+              setThemeMode(themeMode === 'dark' ? 'light' : 'dark')
+            }
+          >
+            {themeMode === 'dark'
+              ? <Sun size={15} />
+              : <Moon size={15} />
+            }
+
+            {themeMode === 'dark'
+              ? 'Modo claro'
+              : 'Modo oscuro'
+            }
+          </button>
         </div>
         {/* User info */}
         <div style={{ padding:'10px 12px', borderTop:'1px solid var(--border)', display:'flex', alignItems:'center', gap:9 }}>
